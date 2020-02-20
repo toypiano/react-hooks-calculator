@@ -76,12 +76,6 @@ const reducer = (state, action) => {
   switch (action.type) {
     case "inputReceived":
       return inputReceived(state, action);
-    case "numberEntered":
-      return numberEntered(state, action);
-    case "operatorEntered":
-      return operatorEntered(state, action);
-    case "maxDigitReached":
-      return maxDigitReached(state, action);
     case "initialized":
       return initialized(state, action);
     case "evaluated":
