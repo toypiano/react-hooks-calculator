@@ -5,26 +5,25 @@ import reducer, { initialState } from "./reducer";
 
 function Calculator(props) {
   const [state, dispatch] = React.useReducer(reducer, initialState);
+  React.useEffect(() => {
+    const v = state.inputVal;
+    if (/[0-9]/.test(v)) enterNumber();
+    if (/[=/*-+]/.test(v)) enterOperator();
+    if (/\./.test(v)) enterDecimal();
+    if (/clear/i.test(v)) initialize();
+    if (/enter|=/i.test(v)) evaluate();
+  }, [state.inputVal]);
 
-  const enterNumber = e =>
-    dispatch({
-      type: "numberEntered",
-      payload: e.target.value
-    });
-
-  const enterOperator = e =>
-    dispatch({
-      type: "operatorEntered",
-      payload: e.target.value
-    });
-
-  const setCurrentVal = e => {
+  const setInputVal = e => {
     dispatch({
       type: "inputReceived",
       payload: e.target.value
     });
   };
 
+  const enterNumber = () => dispatch({ type: "numberEntered" });
+  const enterOperator = () => dispatch({ type: "operatorEntered" });
+  const enterDecimal = () => dispatch({ type: "decimalEntered" });
   const initialize = () => dispatch({ type: "initialized" });
   const evaluate = () => dispatch({ type: "evaluated" });
 
@@ -32,12 +31,8 @@ function Calculator(props) {
     <div className="Calculator">
       <Display state={state} />
       <Buttons
-        enterNumber={enterNumber}
-        enterOperator={enterOperator}
-        evaluate={evaluate}
-        initialize={initialize}
         currentVal={state.currentVal}
-        setCurrentVal={setCurrentVal}
+        setInputVal={setInputVal}
       />
     </div>
   );

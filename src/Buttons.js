@@ -39,13 +39,13 @@ function Button({ value, gridArea, pressedKey, clicked }) {
   );
 }
 
-function Buttons({ setCurrentVal }) {
+function Buttons({ setInputVal }) {
   const [pressedKey, setPressedKey] = React.useState(null);
   React.useEffect(() => {
     function handleKeyDown(e) {
       if (e.key === pressedKey) return;
       setPressedKey(e.key);
-      setCurrentVal({ target: { value: e.key } });
+      setInputVal({ target: { value: e.key } });
     }
     function handleKeyUp(e) {
       if (e.key === pressedKey) {
@@ -58,7 +58,7 @@ function Buttons({ setCurrentVal }) {
       document.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("keyup", handleKeyUp);
     };
-  }, [pressedKey, setCurrentVal]);
+  }, [pressedKey, setInputVal]);
 
   const buttons = buttonObjects.map(btn => {
     return (
@@ -67,7 +67,7 @@ function Buttons({ setCurrentVal }) {
         value={btn.value}
         gridArea={btn.gridArea}
         pressedKey={pressedKey}
-        clicked={setCurrentVal}
+        clicked={setInputVal}
       />
     );
   });
