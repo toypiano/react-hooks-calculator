@@ -39,6 +39,7 @@ function Button({ value, gridArea, pressedKey, clicked }) {
   );
 }
 
+//TODO: Fix 'Clear' button
 function Buttons({ enterNumber, initialize }) {
   const [pressedKey, setPressedKey] = React.useState(null);
   React.useEffect(() => {
