@@ -18,8 +18,15 @@ function Calculator(props) {
       payload: e.target.value
     });
 
-  const initialize = () => ({ type: "initialized" });
-  const evaluate = () => ({ type: "evaluated" });
+  const setCurrentVal = e => {
+    dispatch({
+      type: "inputReceived",
+      payload: e.target.value
+    });
+  };
+
+  const initialize = () => dispatch({ type: "initialized" });
+  const evaluate = () => dispatch({ type: "evaluated" });
 
   return (
     <div className="Calculator">
@@ -29,6 +36,8 @@ function Calculator(props) {
         enterOperator={enterOperator}
         evaluate={evaluate}
         initialize={initialize}
+        currentVal={state.currentVal}
+        setCurrentVal={setCurrentVal}
       />
     </div>
   );

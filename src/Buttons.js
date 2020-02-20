@@ -39,18 +39,13 @@ function Button({ value, gridArea, pressedKey, clicked }) {
   );
 }
 
-//TODO: Fix 'Clear' button
-function Buttons({ enterNumber, initialize }) {
+function Buttons({ setCurrentVal }) {
   const [pressedKey, setPressedKey] = React.useState(null);
   React.useEffect(() => {
     function handleKeyDown(e) {
       if (e.key === pressedKey) return;
-      // return so that we don't set pressedKey as "Clear"
-      if (e.key === "Clear") return initialize();
       setPressedKey(e.key);
-      enterNumber({
-        target: { value: e.key }
-      });
+      setCurrentVal({ target: { value: e.key } });
     }
     function handleKeyUp(e) {
       if (e.key === pressedKey) {
@@ -63,7 +58,7 @@ function Buttons({ enterNumber, initialize }) {
       document.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("keyup", handleKeyUp);
     };
-  }, [pressedKey, enterNumber, initialize]);
+  }, [pressedKey, setCurrentVal]);
 
   const buttons = buttonObjects.map(btn => {
     return (
@@ -72,7 +67,7 @@ function Buttons({ enterNumber, initialize }) {
         value={btn.value}
         gridArea={btn.gridArea}
         pressedKey={pressedKey}
-        clicked={btn.value === "Clear" ? initialize : enterNumber}
+        clicked={setCurrentVal}
       />
     );
   });

@@ -1,6 +1,10 @@
-const MAX_DIGIT = 21;
+// const MAX_DIGIT = 21;
 
-const isOperator = /[/*-+]/;
+const isOperator = val => /[/*-+]/.test(val);
+// const isNumber = val => /[0-9]/.test(val);
+// const isDecimal = val => /\./.test(val);
+// const isEval = val => /Enter|=/i.test(val);
+// const isClear = val => /clear/i.test(val);
 
 // TODO: add logic to process non-digits to generate formula string and display value
 // display: "123.0003"
@@ -9,9 +13,9 @@ function numberEntered(state, action) {
   // return if MAX_DIGIT is reached
   if (state.currentVal.match(/digit/i)) return;
 
-  const { currentVal, formula, evaluated } = state;
+  const { currentVal } = state;
   const newCurrentVal =
-    currentVal === "0" || isOperator.test(currentVal)
+    currentVal === "0" || isOperator(currentVal)
       ? action.payload
       : currentVal.concat(action.payload);
   const newFormula =
@@ -30,7 +34,8 @@ function maxDigitReached(state, action) {
   return {
     ...state,
     currentVal: "Too many digits",
-    prevVal: state.currentVal
+    prevVal: state.currentVal,
+    digitMaxed: true
   };
 }
 
@@ -40,6 +45,7 @@ function operatorEntered(state, action) {
 }
 
 export const initialState = {
+  inputVal: null,
   currentVal: "0",
   prevVal: "0",
   formula: "",
@@ -58,9 +64,18 @@ function evaluated(state, action) {
   return;
 }
 
+function inputReceived(state, action) {
+  return {
+    ...state,
+    inputVal: action.payload
+  };
+}
+
 // reducer for Calculator state
 const reducer = (state, action) => {
   switch (action.type) {
+    case "inputReceived":
+      return inputReceived(state, action);
     case "numberEntered":
       return numberEntered(state, action);
     case "operatorEntered":
