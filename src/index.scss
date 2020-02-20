@@ -1,0 +1,75 @@
+$btn-size: 60px;
+$font: "Patrick Hand";
+$color: hsla(0, 0%, 20%, 1);
+
+.App {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Calculator {
+  display: flex;
+  flex-direction: column;
+}
+
+.Buttons {
+  display: grid;
+  grid-gap: 5px;
+  grid-template-columns: $btn-size $btn-size $btn-size $btn-size;
+  grid-template-rows: $btn-size $btn-size $btn-size $btn-size $btn-size;
+  grid-template-areas:
+    "clear equal divide multiply"
+    "seven eight nine minus"
+    "four five six plus"
+    "one two three enter"
+    "zero zero point enter";
+}
+
+.Button {
+  border-radius: 5px;
+  box-shadow: -1px 2px hsla(0, 0%, 0%, 0.5);
+  $button-background: lighten($color, 100);
+  background-color: $button-background;
+  font-size: 0.8rem;
+  outline: none;
+  /* 0.5s duration on release */
+  transition: background-color 0.5s ease;
+  &:active,
+  &.active {
+    position: relative;
+    top: 2px;
+    right: 1px;
+    box-shadow: 0px 1px hsla(0, 0%, 0%, 0.5);
+    transition-duration: 0s; /* immediately apply style on active*/
+    background-color: darken($button-background, 10);
+  }
+}
+
+.Credit {
+  position: relative;
+  left: $btn-size * 1.3;
+  margin-top: $btn-size * 0.3;
+  font-family: $font, cursive;
+}
+
+.Formula {
+  font-family: $font, cursive;
+  color: lighten($color, 30%);
+  font-size: 1.2rem;
+}
+
+$display_font-size: 1.5rem;
+.Display {
+  font-family: $font, cursive;
+  align-self: flex-end;
+  font-size: $display_font-size;
+  margin-bottom: 1rem;
+  color: $color;
+  width: $btn-size * 4;
+  max-height: $display_font-size * 3;
+  overflow-x: scroll;
+  text-align: right;
+}
