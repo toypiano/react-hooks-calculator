@@ -16,7 +16,6 @@ function Buttons({ setInputVal }) {
       // prevent another button that was focused by clicking
       // from being "clicked" by pressing Enter
       e.preventDefault();
-      console.log("keydown: " + e.key);
       if (e.key === pressedKey) return;
       setInputVal({
         target: { value: e.key }
@@ -54,4 +53,10 @@ function Buttons({ setInputVal }) {
 }
 
 export default Buttons;
+```
+
+- `-` is the only math operator that needs to be escaped inside regex character class.
+
+```jsx
+const isOperator = val => /[/*\-+]/.test(val);
 ```

@@ -7,7 +7,6 @@ function Calculator(props) {
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
   const setInputVal = e => {
-    console.log(e.target.value);
     dispatch({
       type: "inputReceived",
       payload: e.target.value

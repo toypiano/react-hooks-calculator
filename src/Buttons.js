@@ -47,7 +47,6 @@ function Buttons({ setInputVal }) {
       // prevent another button that was focused by clicking
       // from being "clicked" by pressing Enter
       e.preventDefault();
-      console.log("keydown: " + e.key);
       if (e.key === pressedKey) return;
       setInputVal({
         target: { value: e.key }

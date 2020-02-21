@@ -1,35 +1,10 @@
 // const MAX_DIGIT = 21;
 
-const isOperator = val => /[/*-+]/.test(val);
+const isOperator = val => /[/*\-+]/.test(val);
 const isNumber = val => /[0-9]/.test(val);
 const isEval = val => /Enter|=/i.test(val);
 const isClear = val => /clear/i.test(val);
-
-// TODO: add logic to process non-digits to generate formula string and display value
-// display: "123.0003"
-// formula: "321 + 324 * 323 / 4343"
-function numberEntered(state, action) {
-  console.log("state: " + state.inputVal);
-  const { currentVal } = state;
-  const { payload: inputVal } = action;
-  // return if MAX_DIGIT is reached
-  if (state.currentVal.match(/digit/i)) return;
-
-  let newCurrentVal;
-  if (currentVal === "0") {
-    if (inputVal === "0") newCurrentVal = "0";
-    else newCurrentVal = inputVal;
-  } else {
-    newCurrentVal = currentVal.concat(inputVal);
-  }
-
-  return {
-    ...state,
-    inputVal,
-    evaluated: false,
-    currentVal: newCurrentVal
-  };
-}
+const isDecimal = val => /\./.test(val);
 
 export const initialState = {
   inputVal: null,
@@ -45,27 +20,82 @@ function initialized() {
   return initialState;
 }
 
-function operatorEntered() {
-  return;
+// TODO: add logic to process non-digits to generate formula string and display value
+// display: "123.0003"
+// formula: "321 + 324 * 323 / 4343"
+function numberEntered(state, inputVal) {
+  const { currentVal } = state;
+  // return if MAX_DIGIT is reached
+  if (state.currentVal.match(/digit/i)) return;
+
+  let newCurrentVal;
+  if (currentVal === "0") {
+    if (inputVal === "0") newCurrentVal = "0";
+    else newCurrentVal = inputVal;
+  } else {
+    newCurrentVal = currentVal.concat(inputVal);
+  }
+
+  return {
+    ...state,
+    inputVal: inputVal,
+    evaluated: false,
+    currentVal: newCurrentVal
+  };
 }
 
-function evaluated() {
-  return;
+function decimalEntered(state, inputVal) {
+  const { currentVal } = state;
+  let newCurrentVal;
+  if (currentVal === ".") newCurrentVal = ".";
+  newCurrentVal = currentVal.concat(".");
+  if (currentVal.includes(".")) newCurrentVal = currentVal;
+
+  return {
+    ...state,
+    inputVal: inputVal,
+    currentVal: newCurrentVal
+  };
+}
+
+function operatorEntered(state, inputVal) {
+  console.log("operator");
+  const { currentVal } = state;
+  let newCurrentVal;
+  if (inputVal === "-") {
+    if (currentVal === "-" || currentVal[0] === "-")
+      newCurrentVal = currentVal;
+    if (currentVal === "0") newCurrentVal = "-";
+  }
+
+  return {
+    ...state,
+    inputVal: inputVal,
+    currentVal: newCurrentVal
+  };
+}
+
+function evaluated(state, inputVal) {
+  return state;
 }
 
 function inputReceived(state, action) {
   const v = action.payload;
+  console.log("inputReceived: " + v);
   if (isNumber(v)) {
-    return numberEntered(state, action);
+    return numberEntered(state, v);
+  }
+  if (isDecimal(v)) {
+    return decimalEntered(state, v);
   }
   if (isClear(v)) {
-    return initialized(state, action);
+    return initialized(state, v);
   }
   if (isOperator(v)) {
-    operatorEntered(state, action);
+    return operatorEntered(state, v);
   }
   if (isEval(v)) {
-    evaluated(state, action);
+    return evaluated(state, v);
   }
   return state;
 }
