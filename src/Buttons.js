@@ -43,9 +43,16 @@ function Buttons({ setInputVal }) {
   const [pressedKey, setPressedKey] = React.useState(null);
   React.useEffect(() => {
     function handleKeyDown(e) {
+      console.log("keydown: " + e.key);
       if (e.key === pressedKey) return;
-      setPressedKey(e.key);
+      if (e.key === "Enter") {
+        // prevent another button that was focused by clicking
+        // from being "clicked" by pressing Enter
+        e.preventDefault();
+        setInputVal({ target: { value: e.key } });
+      }
       setInputVal({ target: { value: e.key } });
+      setPressedKey(e.key);
     }
     function handleKeyUp(e) {
       if (e.key === pressedKey) {
@@ -63,6 +70,7 @@ function Buttons({ setInputVal }) {
   const buttons = buttonObjects.map(btn => {
     return (
       <Button
+        type="button"
         key={btn.gridArea}
         value={btn.value}
         gridArea={btn.gridArea}
