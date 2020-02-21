@@ -20,9 +20,6 @@ function initialized() {
   return initialState;
 }
 
-// TODO: add logic to process non-digits to generate formula string and display value
-// display: "123.0003"
-// formula: "321 + 324 * 323 / 4343"
 function numberEntered(state, inputVal) {
   const { currentVal, formula } = state;
 
@@ -62,7 +59,6 @@ function decimalEntered(state, inputVal) {
 }
 
 function operatorEntered(state, inputVal) {
-  console.log("operator");
   const { currentVal, formula } = state;
   let newCurrentVal = currentVal,
     newFormula = formula;
@@ -90,6 +86,7 @@ function operatorEntered(state, inputVal) {
   };
 }
 
+// TODO
 function evaluated(state, inputVal) {
   return state;
 }
