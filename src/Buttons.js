@@ -41,19 +41,20 @@ function Button({ value, gridArea, pressedKey, clicked }) {
 
 function Buttons({ setInputVal }) {
   const [pressedKey, setPressedKey] = React.useState(null);
+
   React.useEffect(() => {
     function handleKeyDown(e) {
+      // prevent another button that was focused by clicking
+      // from being "clicked" by pressing Enter
+      e.preventDefault();
       console.log("keydown: " + e.key);
       if (e.key === pressedKey) return;
-      if (e.key === "Enter") {
-        // prevent another button that was focused by clicking
-        // from being "clicked" by pressing Enter
-        e.preventDefault();
-        setInputVal({ target: { value: e.key } });
-      }
-      setInputVal({ target: { value: e.key } });
+      setInputVal({
+        target: { value: e.key }
+      });
       setPressedKey(e.key);
     }
+
     function handleKeyUp(e) {
       if (e.key === pressedKey) {
         setPressedKey(null);
