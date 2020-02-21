@@ -24,20 +24,22 @@ function initialized() {
 // display: "123.0003"
 // formula: "321 + 324 * 323 / 4343"
 function numberEntered(state, inputVal) {
-  const { currentVal } = state;
-  // return if MAX_DIGIT is reached
-  if (state.currentVal.match(/digit/i)) return;
+  const { currentVal, formula } = state;
 
-  let newCurrentVal;
+  let newCurrentVal, newFormula;
   if (currentVal === "0") {
     if (inputVal === "0") newCurrentVal = "0";
     else newCurrentVal = inputVal;
+  } else if (isOperator(currentVal)) {
+    newCurrentVal = inputVal;
   } else {
     newCurrentVal = currentVal.concat(inputVal);
   }
 
+  newFormula = formula.concat(inputVal);
   return {
     ...state,
+    formula: newFormula,
     inputVal: inputVal,
     evaluated: false,
     currentVal: newCurrentVal
@@ -45,14 +47,15 @@ function numberEntered(state, inputVal) {
 }
 
 function decimalEntered(state, inputVal) {
-  const { currentVal } = state;
-  let newCurrentVal;
+  const { currentVal, formula } = state;
+  let newCurrentVal, newFormula;
   if (currentVal === ".") newCurrentVal = ".";
   newCurrentVal = currentVal.concat(".");
   if (currentVal.includes(".")) newCurrentVal = currentVal;
-
+  newFormula = formula.concat(inputVal);
   return {
     ...state,
+    formula: newFormula,
     inputVal: inputVal,
     currentVal: newCurrentVal
   };
@@ -60,16 +63,28 @@ function decimalEntered(state, inputVal) {
 
 function operatorEntered(state, inputVal) {
   console.log("operator");
-  const { currentVal } = state;
-  let newCurrentVal;
+  const { currentVal, formula } = state;
+  let newCurrentVal = currentVal,
+    newFormula = formula;
   if (inputVal === "-") {
     if (currentVal === "-" || currentVal[0] === "-")
       newCurrentVal = currentVal;
-    if (currentVal === "0") newCurrentVal = "-";
+    newFormula = formula;
+    if (currentVal === "0") {
+      newCurrentVal = "-";
+      newFormula = "-";
+    } else {
+      newCurrentVal = "-";
+      newFormula = formula.concat(" " + inputVal + " ");
+    }
+  } else if (!isOperator(currentVal)) {
+    newCurrentVal = inputVal;
+    newFormula = formula.concat(" " + inputVal + " ");
   }
 
   return {
     ...state,
+    formula: newFormula,
     inputVal: inputVal,
     currentVal: newCurrentVal
   };

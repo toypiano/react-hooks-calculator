@@ -1,7 +1,7 @@
 import React from "react";
 
-function Formula() {
-  return <div className="Formula">234 + 234 x 23</div>;
+function Formula({ value }) {
+  return <div className="Formula">{value}</div>;
 }
 
 function Output({ value }) {
@@ -10,7 +10,7 @@ function Output({ value }) {
 
 export default ({ state }) => (
   <div className="Display">
-    <Formula />
+    <Formula value={state.formula} />
     <Output value={state.currentVal} />
   </div>
 );

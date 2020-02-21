@@ -59,6 +59,9 @@ $color: hsla(0, 0%, 20%, 1);
   font-family: $font, cursive;
   color: lighten($color, 30%);
   font-size: 1.2rem;
+  letter-spacing: 0.1rem;
+  width: $btn-size * 4;
+  word-wrap: break-word;
 }
 
 $display_font-size: 1.5rem;
@@ -72,4 +75,5 @@ $display_font-size: 1.5rem;
   max-height: $display_font-size * 3;
   overflow-x: scroll;
   text-align: right;
+  letter-spacing: 0.2rem;
 }
