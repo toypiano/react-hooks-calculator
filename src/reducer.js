@@ -62,10 +62,11 @@ function operatorEntered(state, inputVal) {
   const { currentVal, formula } = state;
   let newCurrentVal = currentVal,
     newFormula = formula;
-  if (inputVal === "-") {
-    if (currentVal === "-" || currentVal[0] === "-")
+  if (inputVal === "-" && !isOperator(currentVal.trim().slice(-1))) {
+    if (currentVal === "-" || currentVal[0] === "-") {
       newCurrentVal = currentVal;
-    newFormula = formula;
+      newFormula = formula;
+    }
     if (currentVal === "0") {
       newCurrentVal = "-";
       newFormula = "-";
@@ -74,8 +75,13 @@ function operatorEntered(state, inputVal) {
       newFormula = formula.concat(" " + inputVal + " ");
     }
   } else if (!isOperator(currentVal)) {
-    newCurrentVal = inputVal;
-    newFormula = formula.concat(" " + inputVal + " ");
+    if (currentVal === "0") {
+      newCurrentVal = currentVal;
+      newFormula = formula;
+    } else {
+      newCurrentVal = inputVal;
+      newFormula = formula.concat(" " + inputVal + " ");
+    }
   }
 
   return {

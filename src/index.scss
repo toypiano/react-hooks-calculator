@@ -1,4 +1,4 @@
-$btn-size: 60px;
+$btn-size: 5rem;
 $font: "Patrick Hand";
 $color: hsla(0, 0%, 20%, 1);
 
@@ -17,7 +17,7 @@ $color: hsla(0, 0%, 20%, 1);
 
 .Buttons {
   display: grid;
-  grid-gap: 5px;
+  grid-gap: $btn-size/10;
   grid-template-columns: $btn-size $btn-size $btn-size $btn-size;
   grid-template-rows: $btn-size $btn-size $btn-size $btn-size $btn-size;
   grid-template-areas:
@@ -30,10 +30,10 @@ $color: hsla(0, 0%, 20%, 1);
 
 .Button {
   border-radius: 5px;
-  box-shadow: -1px 2px hsla(0, 0%, 0%, 0.5);
+  box-shadow: -1px 2px hsla(0, 0%, 0%, 0.6);
   $button-background: lighten($color, 100);
   background-color: $button-background;
-  font-size: 0.8rem;
+  font-size: $btn-size/ 4.5;
   outline: none;
   /* 0.5s duration on release */
   transition: background-color 0.5s ease;
@@ -58,13 +58,13 @@ $color: hsla(0, 0%, 20%, 1);
 .Formula {
   font-family: $font, cursive;
   color: lighten($color, 30%);
-  font-size: 1.2rem;
+  font-size: $btn-size / 2.8;
   letter-spacing: 0.1rem;
   width: $btn-size * 4;
   word-wrap: break-word;
 }
 
-$display_font-size: 1.5rem;
+$display_font-size: $btn-size / 2.3;
 .Output {
   font-family: $font, cursive;
   align-self: flex-end;
