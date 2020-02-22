@@ -1,5 +1,7 @@
 # Keypad Calculator with React Hooks
 
+Using React hooks & css grid
+
 ## Thing I learned from this project
 
 - When you listen to `keydown` or `keypress` event to programmatically activate buttons,
@@ -59,4 +61,41 @@ export default Buttons;
 
 ```jsx
 const isOperator = val => /[/*\-+]/.test(val);
+```
+
+- Css grid is awesome.
+
+```css
+Buttons {
+  display: grid;
+  grid-gap: $btn-size/10;
+  grid-template-columns: $btn-size $btn-size $btn-size $btn-size;
+  grid-template-rows: $btn-size $btn-size $btn-size $btn-size $btn-size;
+  grid-template-areas:
+    "clear equal divide multiply"
+    "seven eight nine minus"
+    "four five six plus"
+    "one two three enter"
+    "zero zero point enter";
+}
+```
+
+```jsx
+function Button({ value, gridArea, pressedKey, clicked }) {
+  let classes = ["Button"];
+  if (pressedKey === value) {
+    classes = [...classes, "active"];
+  }
+  const style = { gridArea };
+  return (
+    <button
+      style={style}
+      className={classes.join(" ")}
+      onClick={clicked}
+      value={value}
+    >
+      {value}
+    </button>
+  );
+}
 ```
