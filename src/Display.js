@@ -8,9 +8,13 @@ function Output({ value }) {
   return <div className="Output">{value}</div>;
 }
 
-export default ({ state }) => (
-  <div className="Display">
-    <Formula value={state.formula} />
-    <Output value={state.currentVal} />
-  </div>
-);
+function Display({ state }) {
+  return (
+    <div className="Display">
+      <Formula value={state.formula} />
+      <Output value={state.currentVal} />
+    </div>
+  );
+}
+
+export default Display;

@@ -7,6 +7,7 @@ const isEval = val => /^Enter$|^=$/i.test(val);
 const isClear = val => /^clear$/i.test(val);
 const isDecimal = val => /^\.$/.test(val);
 const endsWithOperator = val => isOperator(val.trim().slice(-1));
+const endsWithMinus = val => val.trim().slice(-1) === "-";
 
 export const initialState = {
   inputVal: null,
@@ -95,6 +96,28 @@ function operatorEntered(state, inputVal) {
       newCurrentVal = inputVal;
       newFormula = formula.concat(" " + inputVal + " ");
     }
+  } else if (endsWithOperator(formula)) {
+    if (inputVal === "-") {
+      if (endsWithMinus(formula)) {
+        newCurrentVal = inputVal;
+        newFormula = formula;
+      } else {
+        newCurrentVal = inputVal;
+        newFormula = formula + " " + inputVal + " ";
+      }
+    } else {
+      const formulaEndsWithOperatorAndMinus =
+        endsWithMinus(formula) &&
+        endsWithOperator(formula.trim().slice(0, -1));
+      if (formulaEndsWithOperatorAndMinus) {
+        newCurrentVal = inputVal;
+        newFormula =
+          formula.trim().slice(0, -4) + " " + inputVal + " ";
+      } else {
+        newCurrentVal = inputVal;
+        newFormula = formula.slice(0, -3) + " " + inputVal + " ";
+      }
+    }
   }
 
   return {
@@ -105,7 +128,6 @@ function operatorEntered(state, inputVal) {
   };
 }
 
-// TODO
 function evaluated(state, inputVal) {
   const { currentVal, formula } = state;
   let expression = formula;
