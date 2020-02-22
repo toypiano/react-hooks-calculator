@@ -1,4 +1,4 @@
-$btn-size: 5rem;
+$btn-size: 4rem;
 $font: "Patrick Hand";
 $color: hsla(0, 0%, 20%, 1);
 
@@ -58,10 +58,13 @@ $color: hsla(0, 0%, 20%, 1);
 .Formula {
   font-family: $font, cursive;
   color: lighten($color, 30%);
-  font-size: $btn-size / 2.8;
+  $font-size: $btn-size / 2.8;
+  font-size: $font-size;
   letter-spacing: 0.1rem;
   width: $btn-size * 4;
   word-wrap: break-word;
+  max-height: $font-size * 4;
+  overflow: auto;
 }
 
 $display_font-size: $btn-size / 2.3;
