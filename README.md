@@ -2,7 +2,7 @@
 
 Using React hooks & css grid
 
-- [codepen](https://codepen.io/sidhlee/pen/yLNJaqb)
+- <a href="https://codepen.io/sidhlee/pen/yLNJaqb" target="_blank">codepen</a>
 
 ## Thing I learned from this project
 
