@@ -2,12 +2,7 @@
 
 Using React hooks & css grid
 
-<p class="codepen" data-height="575" data-theme-id="default" data-default-tab="js,result" data-user="sidhlee" data-slug-hash="yLNJaqb" style="height: 575px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;" data-pen-title="React Hooks Calculator">
-  <span>See the Pen <a href="https://codepen.io/sidhlee/pen/yLNJaqb">
-  React Hooks Calculator</a> by sidhlee (<a href="https://codepen.io/sidhlee">@sidhlee</a>)
-  on <a href="https://codepen.io">CodePen</a>.</span>
-</p>
-<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+- [codepen](https://codepen.io/sidhlee/pen/yLNJaqb)
 
 ## Thing I learned from this project
 
