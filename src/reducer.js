@@ -1,21 +1,21 @@
 // TODO: add input for precision setting
 const PRECISION = 2;
 
-const isOperator = val => /^[/*\-+]$/.test(val.trim());
-const isNumber = val => /^[0-9]$/.test(val);
-const isEval = val => /^Enter$|^=$/i.test(val);
-const isClear = val => /^clear$/i.test(val);
-const isDecimal = val => /^\.$/.test(val);
-const endsWithOperator = val => isOperator(val.trim().slice(-1));
-const endsWithMinus = val => val.trim().slice(-1) === "-";
+const isOperator = (val) => /^[/*\-+]$/.test(val.trim());
+const isNumber = (val) => /^[0-9]$/.test(val);
+const isEval = (val) => /^Enter$|^=$/i.test(val);
+const isClear = (val) => /^clear$/i.test(val);
+const isDecimal = (val) => /^\.$/.test(val);
+const endsWithOperator = (val) => isOperator(val.trim().slice(-1));
+const endsWithMinus = (val) => val.trim().slice(-1) === '-';
 
 export const initialState = {
   inputVal: null,
-  currentVal: "0",
+  currentVal: '0',
   evaluated: false,
-  prevVal: "0",
-  formula: "",
-  error: false
+  prevVal: '0',
+  formula: '',
+  error: false,
 };
 
 function initialized() {
@@ -30,10 +30,10 @@ function numberEntered(state, inputVal) {
     return {
       ...initialState,
       currentVal: inputVal,
-      formula: inputVal
+      formula: inputVal,
     };
-  if (currentVal === "0") {
-    if (inputVal === "0") newCurrentVal = "0";
+  if (currentVal === '0') {
+    if (inputVal === '0') newCurrentVal = '0';
     else newCurrentVal = inputVal;
   } else if (isOperator(currentVal)) {
     newCurrentVal = inputVal;
@@ -47,22 +47,22 @@ function numberEntered(state, inputVal) {
     formula: newFormula,
     inputVal: inputVal,
     evaluated: false,
-    currentVal: newCurrentVal
+    currentVal: newCurrentVal,
   };
 }
 
 function decimalEntered(state, inputVal) {
   const { currentVal, formula } = state;
   let newCurrentVal, newFormula;
-  if (currentVal === ".") newCurrentVal = ".";
-  newCurrentVal = currentVal.concat(".");
-  if (currentVal.includes(".")) newCurrentVal = currentVal;
+  if (currentVal === '.') newCurrentVal = '.';
+  newCurrentVal = currentVal.concat('.');
+  if (currentVal.includes('.')) newCurrentVal = currentVal;
   newFormula = formula.concat(inputVal);
   return {
     ...state,
     formula: newFormula,
     inputVal: inputVal,
-    currentVal: newCurrentVal
+    currentVal: newCurrentVal,
   };
 }
 
@@ -74,48 +74,46 @@ function operatorEntered(state, inputVal) {
     return {
       ...state,
       currentVal: inputVal,
-      formula: prevVal + " " + inputVal + " "
+      formula: prevVal + ' ' + inputVal + ' ',
     };
-  if (inputVal === "-" && !endsWithOperator(currentVal)) {
-    if (currentVal === "-" || currentVal[0] === "-") {
+  if (inputVal === '-' && !endsWithOperator(currentVal)) {
+    if (currentVal === '-' || currentVal[0] === '-') {
       newCurrentVal = currentVal;
       newFormula = formula;
     }
-    if (currentVal === "0") {
-      newCurrentVal = "-";
-      newFormula = "-";
+    if (currentVal === '0') {
+      newCurrentVal = '-';
+      newFormula = '-';
     } else {
-      newCurrentVal = "-";
-      newFormula = formula.concat(" " + inputVal + " ");
+      newCurrentVal = '-';
+      newFormula = formula.concat(' ' + inputVal + ' ');
     }
   } else if (!isOperator(currentVal)) {
-    if (currentVal === "0") {
+    if (currentVal === '0') {
       newCurrentVal = currentVal;
       newFormula = formula;
     } else {
       newCurrentVal = inputVal;
-      newFormula = formula.concat(" " + inputVal + " ");
+      newFormula = formula.concat(' ' + inputVal + ' ');
     }
   } else if (endsWithOperator(formula)) {
-    if (inputVal === "-") {
+    if (inputVal === '-') {
       if (endsWithMinus(formula)) {
         newCurrentVal = inputVal;
         newFormula = formula;
       } else {
         newCurrentVal = inputVal;
-        newFormula = formula + " " + inputVal + " ";
+        newFormula = formula + ' ' + inputVal + ' ';
       }
     } else {
       const formulaEndsWithOperatorAndMinus =
-        endsWithMinus(formula) &&
-        endsWithOperator(formula.trim().slice(0, -1));
+        endsWithMinus(formula) && endsWithOperator(formula.trim().slice(0, -1));
       if (formulaEndsWithOperatorAndMinus) {
         newCurrentVal = inputVal;
-        newFormula =
-          formula.trim().slice(0, -4) + " " + inputVal + " ";
+        newFormula = formula.trim().slice(0, -4) + ' ' + inputVal + ' ';
       } else {
         newCurrentVal = inputVal;
-        newFormula = formula.slice(0, -3) + " " + inputVal + " ";
+        newFormula = formula.slice(0, -3) + ' ' + inputVal + ' ';
       }
     }
   }
@@ -124,7 +122,7 @@ function operatorEntered(state, inputVal) {
     ...state,
     formula: newFormula,
     inputVal: inputVal,
-    currentVal: newCurrentVal
+    currentVal: newCurrentVal,
   };
 }
 
@@ -137,13 +135,13 @@ function evaluated(state, inputVal) {
   const answer =
     // eslint-disable-next-line no-eval
     Math.round(eval(expression) * 10 ** PRECISION) / 10 ** PRECISION;
-  const newFormula = expression + " = " + answer;
+  const newFormula = expression + ' = ' + answer;
   return {
     ...state,
     currentVal: answer.toString(),
     formula: newFormula,
     prevVal: answer,
-    evaluated: true
+    evaluated: true,
   };
 }
 
@@ -163,7 +161,7 @@ function inputReceived(state, action) {
 // reducer for Calculator state
 const reducer = (state, action) => {
   switch (action.type) {
-    case "inputReceived":
+    case 'inputReceived':
       return inputReceived(state, action);
     default:
       return state;

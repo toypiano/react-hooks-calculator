@@ -1,31 +1,124 @@
+:root {
+  --btn-size: Min(Max(4rem, 5vw), 6rem);
+}
+
 $btn-size: 4rem;
-$font: "Patrick Hand";
+$font: 'Patrick Hand';
+$ff: $font, cursive;
 $color: hsla(0, 0%, 20%, 1);
 
-.App {
+html {
+  box-sizing: border-box;
+  @media (min-width: 1200px) {
+    font-size: 125%;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+}
+
+.container {
+}
+
+.app {
   height: 100vh;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  .calculator {
+    display: flex;
+    flex-direction: column;
+
+    .display {
+      display: grid;
+      min-height: 6em;
+      margin-bottom: 0.5rem;
+
+      .formula {
+        display: block;
+        font-family: $font, cursive;
+        color: lighten($color, 30%);
+        $font-size: $btn-size / 2.8;
+        font-size: $font-size;
+        letter-spacing: 0.1rem;
+        width: $btn-size * 4;
+        word-wrap: break-word;
+        max-height: $font-size * 4;
+        overflow: auto;
+      }
+
+      $display_font-size: $btn-size / 2.3;
+      .output {
+        display: block;
+        font-family: $font, cursive;
+        align-self: end;
+        font-size: $display_font-size;
+        margin-bottom: 1rem;
+        color: $color;
+        width: $btn-size * 4;
+        max-height: $display_font-size * 1.2;
+        overflow-x: scroll;
+        text-align: right;
+        letter-spacing: 0.2rem;
+      }
+    }
+  }
+  .credit {
+    margin-top: 1em;
+    text-align: right;
+    font-family: $ff;
+    font-size: 1.2rem;
+    a {
+      margin-left: 10px;
+      i {
+        color: $color;
+        display: inline-block;
+        font-size: 1.5rem;
+        transition: color 200ms ease;
+      }
+      &:hover i {
+        color: hotpink;
+      }
+    }
+  }
+  .instruction {
+    text-align: right;
+    font-size: 1rem;
+    font-family: $ff;
+    color: #777;
+    animation: 1s ease-in 2s 3 flash;
+  }
 }
 
-.Calculator {
-  display: flex;
-  flex-direction: column;
+@keyframes flash {
+  50% {
+    opacity: 0.3;
+  }
 }
 
 .Buttons {
   display: grid;
-  grid-gap: $btn-size/10;
-  grid-template-columns: $btn-size $btn-size $btn-size $btn-size;
-  grid-template-rows: $btn-size $btn-size $btn-size $btn-size $btn-size;
+  // using static btn-size because we need to set the equal width and height
+  gap: calc(var(--btn-size) / 10);
+  grid-template-columns: repeat(4, var(--btn-size));
+  grid-template-rows: repeat(5, var(--btn-size));
   grid-template-areas:
-    "clear equal divide multiply"
-    "seven eight nine minus"
-    "four five six plus"
-    "one two three enter"
-    "zero zero point enter";
+    'clear equal divide multiply'
+    'seven eight nine minus'
+    'four five six plus'
+    'one two three enter'
+    'zero zero point enter';
 }
 
 .Button {
@@ -46,46 +139,4 @@ $color: hsla(0, 0%, 20%, 1);
     transition-duration: 0s; /* immediately apply style on active*/
     background-color: darken($button-background, 10);
   }
-}
-
-.Credit {
-  position: relative;
-  left: $btn-size * 1.3;
-  margin-top: $btn-size * 0.3;
-  font-family: $font, cursive;
-  font-size: 1.2rem;
-  a {
-    margin-left: 10px;
-    i {
-      color: $color;
-      display: inline-block;
-      font-size: 1.5rem;
-    }
-  }
-}
-
-.Formula {
-  font-family: $font, cursive;
-  color: lighten($color, 30%);
-  $font-size: $btn-size / 2.8;
-  font-size: $font-size;
-  letter-spacing: 0.1rem;
-  width: $btn-size * 4;
-  word-wrap: break-word;
-  max-height: $font-size * 4;
-  overflow: auto;
-}
-
-$display_font-size: $btn-size / 2.3;
-.Output {
-  font-family: $font, cursive;
-  align-self: flex-end;
-  font-size: $display_font-size;
-  margin-bottom: 1rem;
-  color: $color;
-  width: $btn-size * 4;
-  max-height: $display_font-size * 1.2;
-  overflow-x: scroll;
-  text-align: right;
-  letter-spacing: 0.2rem;
 }
