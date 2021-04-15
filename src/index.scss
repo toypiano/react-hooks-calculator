@@ -1,5 +1,5 @@
 :root {
-  --btn-size: Min(Max(4rem, 5vw), 6rem);
+  --btn-size: min(max(4rem, 5vw), 6rem);
 }
 
 $btn-size: 4rem;
